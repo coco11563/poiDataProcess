@@ -5,6 +5,7 @@ import java.util.Queue;
 public class priorityQueue {  
 	    private String name;  
 	    private double population; 
+	    private double distance ;
 	    private final static double dw = 0.5;
 	    private final static double cw = 0.5 ;
 	    public void print(){
@@ -19,6 +20,7 @@ public class priorityQueue {
 	    	double population = populationCacu(distance , checkinnum );
 	    	this.name = name ;
 	    	this.population = population; 
+	    	this.setDistance(distance) ;
 	    }
 	    public double populationCacu(double distance , double checkinnum ){
 	    	double population = sigmoid(checkinnum) * cw - dw * sigmoid(distance) ;
@@ -81,6 +83,18 @@ public class priorityQueue {
 	        System.out.println(priorityQueue.poll().toString());
 	        System.out.println(priorityQueue.poll().toString());
 	        System.out.println(priorityQueue.poll().toString());
-	    }  
+	    }
+		/**
+		 * @return the distance
+		 */
+		public double getDistance() {
+			return distance;
+		}
+		/**
+		 * @param distance the distance to set
+		 */
+		public void setDistance(double distance) {
+			this.distance = distance;
+		}  
 	
 }

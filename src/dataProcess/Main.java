@@ -16,7 +16,7 @@ import dataStruct.trainSetStatus;
 public class Main {
 	public static final double Pi = Math.PI; 
 	private final static double R = 6371229; // 地球的半径(米)
-	private static final int k = 10 ;
+	private static final int k = 15;
 	public static void main(String[] args) throws TimeNotExistException{
 		readData rd = new readData();
 		readTrainSet rt = new readTrainSet();
@@ -46,6 +46,7 @@ public class Main {
 		List<String> poi = null ;
 		int rightnum = 0 ;
 		System.out.println("正在进行一万次随机取点测试...");
+		double distance ;
 		for(int j = 0 ; j < 10000 ; j ++){
 			double seed = Math.random();
 			testSetStatus test = rts.li.get((int)(seed * rts.li.size())); //随机取点做测试
@@ -58,15 +59,21 @@ public class Main {
 			
 			for(int t = 0 ; t < k ; t ++){
 				poiid =poi.get(t);	
-				pQ.add(new priorityQueue(poiid,calDistance(rt.m.get(poiid),test.getCoor()) ,rd.check(test.getTime(),poiid)));
+				distance = calDistance(rt.m.get(poiid),test.getCoor()) ;
+				pQ.add(new priorityQueue(poiid,distance ,rd.check(test.getTime(),poiid)));
+				
 			}
 //			pQ.peek().print();
 //			System.out.println(test.getType());
 //			System.out.println(rt.m_id_type.get(pQ.peek().getName()));
-			if(rt.m_id_type.get(pQ.poll().getName()).equals(test.getType())){
+			if(rt.m_id_type.get(pQ.peek().getName()).equals(test.getType())){
 				rightnum++;
 				System.out.println(rightnum + "/" + (j+1) );
 				}
+			for(int t = 0 ; t < k ; t ++){
+			priorityQueue temp = pQ.poll() ;
+			System.out.println( temp.getName() + "-" + temp.getPopulation() + "-" + temp.getDistance());
+			}
 		}
 		System.out.println("一万次随机取点完成，准确率为："+rightnum / 10000.0);
 		
