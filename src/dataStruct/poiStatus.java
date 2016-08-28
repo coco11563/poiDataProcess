@@ -1,5 +1,21 @@
 package dataStruct;
-
+/**
+ * 存储着一个签到点的基本数据
+ * 
+ * 包括：
+ * 
+ * lat：坐标数据
+ * 
+ * lon：坐标数据
+ * 
+ * poiid：该签到点的id
+ * 
+ * checkinnum：该签到点的签到数
+ * 
+ * type：该签到点对应的小类
+ * @author coco1
+ *
+ */
 public class poiStatus {
 	private double lat ;
 	private double lon ;
@@ -7,11 +23,18 @@ public class poiStatus {
 	private int checkInNum ;
 	private String type ;
 	/**
+	 * 注意实例化参数的顺序
 	 * 
 	 * @param poiid
+	 * 
 	 * @param lat
+	 * 
 	 * @param lon
+	 * 
+	 * @param type
+	 * 
 	 * @param checkInNum
+	 * 
 	 */
 	public poiStatus(String poiid , double lat , double lon , String type ,int checkInNum){
 		this.lat = lat ; 

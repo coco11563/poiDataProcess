@@ -1,7 +1,18 @@
-package dataStruct;
-import java.util.Comparator;  
-import java.util.PriorityQueue;  
-import java.util.Queue;  
+package dataStruct;  
+/**
+ * 存储优先队列的节点
+ * 
+ * 结构是：
+ * 
+ * poiid
+ * 
+ * population
+ * 
+ * distance
+ * 
+ * @author coco1
+ *
+ */
 public class priorityQueue {  
 	    private String name;  
 	    private double population; 
@@ -11,11 +22,31 @@ public class priorityQueue {
 	    public void print(){
 	    	System.out.println(this.toString());
 	    }
+	    /**
+	     * 
+	     * 使用这个实例化方法不会存储距离
+	     * 
+	     * @param name
+	     * 
+	     * @param population
+	     * 
+	     */
 	    public priorityQueue(String name, double population)  
 	    {  
 	        this.name = name;  
 	        this.population = population;  
 	    }  
+	    /**
+	     * 
+	     * 使用这个实例化方法会顺便存储这个点的距离
+	     * 
+	     * @param name
+	     * 
+	     * @param distance
+	     * 
+	     * @param checkinnum
+	     * 
+	     */
 	    public priorityQueue(String name , double distance , int checkinnum){
 	    	double population = populationCacu(distance , checkinnum );
 	    	this.name = name ;
@@ -42,48 +73,6 @@ public class priorityQueue {
 	    {  
 	         return getName() + " - " + getPopulation();  
 	    }  
-	    public static void main(String args[])  
-	    {  
-	        Comparator<priorityQueue> OrderIsdn =  new Comparator<priorityQueue>(){  
-	            public int compare(priorityQueue o1, priorityQueue o2) {  
-	                // TODO Auto-generated method stub  
-	                double numbera = o1.getPopulation();  
-	                double numberb = o2.getPopulation();  
-	                if(numberb > numbera)  
-	                {  
-	                    return 1;  
-	                }  
-	                else if(numberb<numbera)  
-	                {  
-	                    return -1;  
-	                }  
-	                else  
-	                {  
-	                    return 0;  
-	                }  
-	              
-	            }  
-	  
-	              
-	              
-	        };  
-	        Queue<priorityQueue> priorityQueue =  new PriorityQueue<priorityQueue>(11,OrderIsdn);  
-	          
-	                  
-	              
-	        priorityQueue t1 = new priorityQueue("t1",1000,5);  
-	        priorityQueue t3 = new priorityQueue("t3",372 ,6);  
-	        priorityQueue t2 = new priorityQueue("t2",399 , 5);  
-	        priorityQueue t4 = new priorityQueue("t4",473 , 100);  
-	        priorityQueue.add(t1);  
-	        priorityQueue.add(t3);  
-	        priorityQueue.add(t2);  
-	        priorityQueue.add(t4);  
-	        System.out.println(priorityQueue.poll().toString());
-	        System.out.println(priorityQueue.poll().toString());
-	        System.out.println(priorityQueue.poll().toString());
-	        System.out.println(priorityQueue.poll().toString());
-	    }
 		/**
 		 * @return the distance
 		 */

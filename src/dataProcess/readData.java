@@ -19,6 +19,14 @@ public class readData {
 	public readData(){
 		readFile(datapath);
 	}
+	/**
+	 * 
+	 * 读取poi点的签到数据
+	 * 
+	 * 在这个类里面生成一个Map，Map以签到的时间点（0-23）为key ， poiStatus为value
+	 * 
+	 * @param path
+	 */
 	public void readFile(String path)
 	{
 		
@@ -38,12 +46,20 @@ public class readData {
 				BufferedReader bufferedReader = new BufferedReader(read);
 	            String lineTxt = null;
 	            while((lineTxt = bufferedReader.readLine()) != null){
-	            	if(m.containsKey(readTime(lineTxt))){
+	            	if(m.containsKey(readTime(lineTxt))){//1
+	            		
 	            		m.get(readTime(lineTxt)).add(readPoiStatus(lineTxt));
+	            		
+//	            		m.get(1).add(readPoiStatus(lineTxt));
+	            		
 	            	}else{
+	            		
 	            		li = new LinkedList<poiStatus>();
 	            		li.add(readPoiStatus(lineTxt));
+	            		
 	            		m.put(readTime(lineTxt), li);
+	            		
+//	            		m.put(1, li);
 	            	}
                 }
 	            bufferedReader.close();
@@ -67,11 +83,24 @@ public class readData {
 		return ret ;
 		
 	}
+	/**
+	 * 算是一个builder类吧...
+	 * 输入一段String ，返回这个字符串对应的poiStatus
+	 * @param Line
+	 * @return
+	 */
 	public poiStatus readPoiStatus(String Line){
 		String[] li = Line.split("\t");
 		poiStatus ret  = new poiStatus(li[1], Double.parseDouble(li[2]) , Double.parseDouble(li[3]) ,li[4], Integer.parseInt(li[5]));
 		return ret;
 	}
+	/**
+	 * 通过输入点的签到时间和输入点的poiid去找该点的签到数量
+	 * @param time
+	 * @param poiid
+	 * @return
+	 * @throws TimeNotExistException
+	 */
 	public int check(int time , String poiid) throws TimeNotExistException{
 		if(!m.containsKey(time)){throw new TimeNotExistException() ;}
 		LinkedList<poiStatus> li = m.get(time);

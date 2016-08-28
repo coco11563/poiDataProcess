@@ -1,13 +1,29 @@
 package dataStruct;
-
+/**
+ * 存储了trainSet的基础单元
+ * 
+ * 包含：
+ * 
+ * coor[]
+ * 
+ * poiid
+ * 
+ * type
+ * 
+ * @author coco1
+ *
+ */
 public class trainSetStatus {
 	private double[] coor ;
 	private String poiid ;
 	private String type ;
 	/**
+	 * 使用这个方法对对象进行实例化，注意顺序哦
 	 * 
 	 * @param coor
+	 * 
 	 * @param poiid
+	 * 
 	 * @param type
 	 */
 	public trainSetStatus(double[] coor , String poiid , String type){

@@ -9,7 +9,16 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import dataStruct.testSetStatus;
-
+/**
+ * 使用这个方法读取测试集
+ * 
+ * 测试集的组成是一个单元为testSetStatus的LinkedList
+ * 
+ * 读取的文件使checkpoint.txt
+ * 
+ * @author coco1
+ *
+ */
 public class readTestSet {
 	LinkedList<testSetStatus> li = new LinkedList<testSetStatus>();
 	private final static String filepath_1 = "./data/checkpoint.txt";

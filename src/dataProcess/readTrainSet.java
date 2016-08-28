@@ -11,7 +11,20 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import dataStruct.trainSetStatus;
-
+/**
+ * 初始化训练集，读取的是位于data下面的poipoint.txt，存储的内容是武汉市所有的poi点
+ * 
+ * 实例化这个对象会生成三个实例化对象
+ * 
+ * ls：存储着以trainSetStatus为节点的链表
+ * 
+ * m：key poiid ，value 坐标数据
+ * 
+ * m_id_type key poiid ， value 该点的type
+ * 
+ * @author coco1
+ *
+ */
 public class readTrainSet {
 	LinkedList<trainSetStatus> ls = new LinkedList<trainSetStatus>();
 	private static final String inputfile = "C:\\Users\\coco1\\workspace\\poiDataProcess\\data\\poipoint.txt";

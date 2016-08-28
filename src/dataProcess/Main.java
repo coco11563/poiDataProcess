@@ -1,6 +1,7 @@
 package dataProcess;
 
 import java.util.Comparator;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -12,7 +13,18 @@ import Knn.KeySizeException;
 import dataStruct.priorityQueue;
 import dataStruct.testSetStatus;
 import dataStruct.trainSetStatus;
-
+/**
+ * main函数所在的区域
+ * 
+ * 第一步：初始化训练集、测试、mr所处理的数据
+ * 
+ * 第二步：将训练集插入kd树种
+ * 
+ * 第三步：从测试集中随机挑选一万个点作测试
+ * 
+ * @author coco1
+ *
+ */
 public class Main {
 	public static final double Pi = Math.PI; 
 	private final static double R = 6371229; // 地球的半径(米)
@@ -35,7 +47,6 @@ public class Main {
 //				System.out.println(d[0] + "-" + d[1] + "-" + trainset.get(i).getPoiid());
 			} catch (KeySizeException | KeyDuplicateException e) {
 				samenum ++ ;
-				// TODO Auto-generated catch block
 //				System.out.println(samenum + "-" + i+"-"+d[0] + "-" + d[1] + "-" + trainset.get(i).getPoiid());
 //				e.printStackTrace();
 			}
@@ -53,15 +64,16 @@ public class Main {
 			try {
 				poi = kd.nearest(test.getCoor(),k);
 			} catch (KeySizeException | IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 			for(int t = 0 ; t < k ; t ++){
 				poiid =poi.get(t);	
 				distance = calDistance(rt.m.get(poiid),test.getCoor()) ;
+				
 				pQ.add(new priorityQueue(poiid,distance ,rd.check(test.getTime(),poiid)));
 				
+//				pQ.add(new priorityQueue(poiid,distance ,rd.check(1,poiid)));
 			}
 //			pQ.peek().print();
 //			System.out.println(test.getType());
@@ -71,13 +83,20 @@ public class Main {
 				System.out.println(rightnum + "/" + (j+1) );
 				}
 			for(int t = 0 ; t < k ; t ++){
+			@SuppressWarnings("unused")
 			priorityQueue temp = pQ.poll() ;
-			System.out.println( temp.getName() + "-" + temp.getPopulation() + "-" + temp.getDistance());
+//			System.out.println( temp.getName() + "-" + temp.getPopulation() + "-" + temp.getDistance());
 			}
 		}
 		System.out.println("一万次随机取点完成，准确率为："+rightnum / 10000.0);
 		
 	}
+	/**
+	 * 输入经纬度坐标，返回距离，单位是米
+	 * @param coor1
+	 * @param coor2
+	 * @return
+	 */
 	public static double calDistance(double[] coor1,double[] coor2)
 	{
 		double x, y, distance;
@@ -86,9 +105,11 @@ public class Main {
 		distance = Math.hypot(x, y);
 		return distance;
 	}
+	/**
+	 * 定义了优先队列的对比原则
+	 */
 	static Comparator<priorityQueue> OrderIsdn =  new Comparator<priorityQueue>(){  
         public int compare(priorityQueue o1, priorityQueue o2) {  
-            // TODO Auto-generated method stub  
             double numbera = o1.getPopulation();  
             double numberb = o2.getPopulation();  
             if(numberb > numbera)  

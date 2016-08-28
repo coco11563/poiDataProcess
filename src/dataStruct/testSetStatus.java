@@ -3,18 +3,38 @@ package dataStruct;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/**
+ * 存储了训练集的最小单元
+ * 
+ * 每个单元包含：
+ * 
+ * coor[]
+ * 
+ * type
+ * 
+ * time
+ * 
+ * poiid
+ * 
+ * @author coco1
+ *
+ */
 public class testSetStatus {
 	private double[] coor ; 
 	private String type ;
 	private int time ;
 	private String poiid ;
 	/**
+	 * 注意变量的输入次序
 	 * 
 	 * @param coor
+	 * 
 	 * @param type
+	 * 
 	 * @param poiid
+	 * 
 	 * @param time
+	 * 
 	 */
 	public testSetStatus(double [] coor , String type ,String poiid , String time){
 		this.setCoor(coor) ;
@@ -22,6 +42,13 @@ public class testSetStatus {
 		this.setTime(getTime(time)) ;
 		this.setPoiid(poiid);
 	}
+	/**
+	 * 使用这个方法从一段形式是HH:mm:ss的字符串内读取对应的小时
+	 * 
+	 * @param String time
+	 * 
+	 * @return int time
+	 */
 	@SuppressWarnings("deprecation")
 	public int getTime(String time){
 		

@@ -1,5 +1,11 @@
 package dataProcess;
-
+/**
+ * 
+ * 测试下距离计算的单位
+ * 
+ * @author coco1
+ *
+ */
 public class TestCacu {
 	static double Pi = Math.PI ;
 	static double R = 6371229 ;
