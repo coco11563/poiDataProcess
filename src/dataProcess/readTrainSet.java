@@ -27,7 +27,7 @@ import dataStruct.trainSetStatus;
  */
 public class readTrainSet {
 	LinkedList<trainSetStatus> ls = new LinkedList<trainSetStatus>();
-	private static final String inputfile = "C:\\Users\\coco1\\workspace\\poiDataProcess\\data\\poipoint.txt";
+	private static final String inputfile = "./data/poipoint.txt";
 	Map<String , double[]> m = new HashMap<String , double[]>();
 	Map<String , String> m_id_type = new HashMap<String , String>();
 	public readTrainSet(){

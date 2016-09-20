@@ -26,9 +26,10 @@ import dataStruct.trainSetStatus;
  *
  */
 public class Main {
+	private static DataStastic ds = new DataStastic();
 	public static final double Pi = Math.PI; 
 	private final static double R = 6371229; // 地球的半径(米)
-	private static final int k = 15;
+//	private static final int k = 15;
 	public static void main(String[] args) throws TimeNotExistException{
 		readData rd = new readData();
 		readTrainSet rt = new readTrainSet();
@@ -38,58 +39,61 @@ public class Main {
 		LinkedList<trainSetStatus> trainset =  rt.ls ;
 		int samenum = 0;
 		System.out.println("初始化KDTREE...");
-		for(int i = 0 ; i < trainset.size() ; i++){
-			double[] d = new double[2];
-			d[0] = trainset.get(i).getCoor()[0];
-			d[1] =trainset.get(i).getCoor()[1];
-			try {
-				kd.insert(d, trainset.get(i).getPoiid());
+
+			for (int i = 0; i < trainset.size(); i++) {
+				double[] d = new double[2];
+				d[0] = trainset.get(i).getCoor()[0];
+				d[1] = trainset.get(i).getCoor()[1];
+				try {
+					kd.insert(d, trainset.get(i).getPoiid());
 //				System.out.println(d[0] + "-" + d[1] + "-" + trainset.get(i).getPoiid());
-			} catch (KeySizeException | KeyDuplicateException e) {
-				samenum ++ ;
+				} catch (KeySizeException | KeyDuplicateException e) {
+					samenum++;
 //				System.out.println(samenum + "-" + i+"-"+d[0] + "-" + d[1] + "-" + trainset.get(i).getPoiid());
 //				e.printStackTrace();
+				}
 			}
-		} 
-		System.out.println("初始化KDTREE完成 ，其中重复率为：" + ((double)samenum / trainset.size()));
-		Queue<priorityQueue> pQ =  new PriorityQueue<priorityQueue>(11,OrderIsdn); 
-		String poiid ;
-		List<String> poi = null ;
-		int rightnum = 0 ;
-		System.out.println("正在进行一万次随机取点测试...");
-		double distance ;
-		for(int j = 0 ; j < 10000 ; j ++){
-			double seed = Math.random();
-			testSetStatus test = rts.li.get((int)(seed * rts.li.size())); //随机取点做测试
-			try {
-				poi = kd.nearest(test.getCoor(),k);
-			} catch (KeySizeException | IllegalArgumentException e) {
-				e.printStackTrace();
-			}
-			
-			for(int t = 0 ; t < k ; t ++){
-				poiid =poi.get(t);	
-				distance = calDistance(rt.m.get(poiid),test.getCoor()) ;
-				
-				pQ.add(new priorityQueue(poiid,distance ,rd.check(test.getTime(),poiid)));
-				
+			System.out.println("初始化KDTREE完成 ，其中重复率为：" + ((double) samenum / trainset.size()));
+			Queue<priorityQueue> pQ = new PriorityQueue<>(11, OrderIsdn);
+			String poiid;
+			List<String> poi = null;
+			int rightnum = 0;
+			System.out.println("正在进行一万次随机取点测试...");
+			double distance;
+		for (int k =5 ; k <= 15 ; k ++) {
+			rightnum = 0;
+			for (int j = 0; j < 10000; j++) {
+				double seed = Math.random();
+				testSetStatus test = rts.li.get((int) (seed * rts.li.size())); //随机取点做测试
+				try {
+					poi = kd.nearest(test.getCoor(), k);
+				} catch (KeySizeException | IllegalArgumentException e) {
+					e.printStackTrace();
+				}
+
+				for (int t = 0; t < k; t++) {
+					poiid = poi.get(t);
+					distance = calDistance(rt.m.get(poiid), test.getCoor());
+
+					pQ.add(new priorityQueue(poiid, distance, rd.check(test.getTime(), poiid)));
+
 //				pQ.add(new priorityQueue(poiid,distance ,rd.check(1,poiid)));
-			}
+				}
 //			pQ.peek().print();
 //			System.out.println(test.getType());
 //			System.out.println(rt.m_id_type.get(pQ.peek().getName()));
-			if(rt.m_id_type.get(pQ.peek().getName()).equals(test.getType())){
-				rightnum++;
-				System.out.println(rightnum + "/" + (j+1) );
+				if (rt.m_id_type.get(pQ.peek().getName()).equals(test.getType())) {
+					rightnum++;
+//					System.out.println(rightnum + "/" + (j + 1));
 				}
-			for(int t = 0 ; t < k ; t ++){
-			@SuppressWarnings("unused")
-			priorityQueue temp = pQ.poll() ;
+				for (int t = 0; t < k; t++) {
+					@SuppressWarnings("unused")
+					priorityQueue temp = pQ.poll();
 //			System.out.println( temp.getName() + "-" + temp.getPopulation() + "-" + temp.getDistance());
+				}
 			}
+			System.out.println("一万次随机取点完成，准确率为：" + rightnum / 10000.0 + "，当前k值为" + k);
 		}
-		System.out.println("一万次随机取点完成，准确率为："+rightnum / 10000.0);
-		
 	}
 	/**
 	 * 输入经纬度坐标，返回距离，单位是米
